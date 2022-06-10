@@ -1,33 +1,47 @@
 <script lang="ts" setup>
+import {  reactive, ref } from 'vue';
 import axios from "axios";
 import { useRouter } from "vue-router";
-import { ref } from '@vue/reactivity';
-const router = useRouter();
 
+const router = useRouter();
 
 const searchMovieID = router.currentRoute.value.query.name
 
-const movieDetail = ref({});
+
+let movieDetail = reactive([{
+    imdbID: null,
+    Title: null,
+    Year: null,
+    Poster: null,
+}])
+  
+
 
 
 const movieDetailUrl = () => {
-  axios.get(`http://www.omdbapi.com/?apikey=8321507c&plot=full&i=${searchMovieID}`).then(response => {
-    console.log(response);
-    movieDetail.value = response.data;
+  axios.get(`http://www.omdbapi.com/?apikey=8321507c&i=${searchMovieID}`).then(response => {
+    // state.movieDetail = response.data;
+    movieDetail = {
+      imdbID: response.data.imdbID,
+      Title: response.data.Title,
+      Year: response.data.Year,
+      Poster: response.data.Poster,
+    }
+
+    console.log(movieDetail);
   }).catch(error => {
     console.log(error);
   });
 };
 
-setTimeout(() => {
-  console.log(JSON.parse(JSON.stringify(movieDetail.value)));
-  console.log(movieDetail.value);
-}, 2000);
 
 movieDetailUrl();
 </script>
 
 <template>
-<p v-for="test in movieDetail" :key="test.imdbID">{{test.Title}}</p>
+<p v-for="(key,val) in movieDetail" :key="val">
+  {{key}} : {{val.Title}}
+  <!-- <img :src="val.Poster" alt=""> -->
+</p>
 
 </template>

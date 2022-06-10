@@ -5,8 +5,9 @@ const router = useRouter();
 
 
 const searchMovie = (e) => {
+  if (e == undefined) return
   router.push({
-    name: "search",
+    name: "Search",
     query: {
       name: e
     },

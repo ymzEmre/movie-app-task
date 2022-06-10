@@ -25,9 +25,6 @@ const homePageMovies = (pageNumber) => {
 }
 
 
-  
-
-
 homePageMovies()
 </script>
 
@@ -41,7 +38,7 @@ homePageMovies()
       <li class="page-item disabled"><a
           class="page-link relative block py-1.5 px-3 rounded border-0 bg-transparent outline-none transition-all duration-300 rounded text-gray-500 pointer-events-none focus:shadow-none"
           href="#" tabindex="-1" aria-disabled="true">Previous</a></li>
-      <li class="page-item" v-for="item in totalResults" :key="item.id"><a
+      <li class="page-item cursor-pointer" v-for="item in totalResults" :key="item.id"><a
           class="page-link relative block py-1.5 px-3 rounded border-0 bg-transparent outline-none transition-all duration-300 rounded text-white hover:bg-gray-900 focus:shadow-none"
            @click="homePageMovies(item)">{{item}}</a></li>
       <li class="page-item"><a

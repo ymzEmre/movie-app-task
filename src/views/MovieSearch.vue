@@ -17,7 +17,7 @@ const totalResults = ref();
 const searchMovie2 = (e) => {
   axios.get(`http://www.omdbapi.com/?apikey=8321507c&s=${searchMovieName}&page=${e}`).then(response => {
     searchMovieList.value = response.data.Search;
-      totalResults.value = Math.floor(response.data.totalResults / 10);
+    totalResults.value = Math.floor(response.data.totalResults / 10);
   }).catch(error => {
     console.log(error);
   });
@@ -29,6 +29,9 @@ searchMovie2()
 
 
 <template>
+<h3 class="text-white text-5xl flex justify-center items-center">Movies not found</h3>
+
+<div v-if="searchMovieList">
   <h3 class="text-white text-5xl ml-10 mt-10">result for {{searchMovieName}}</h3>
     <div class="grid grid-cols-5 gap-8 p-9">
   <div v-for="movie in searchMovieList" :key="movie.imdbID">
@@ -52,7 +55,7 @@ searchMovie2()
       <li class="page-item disabled"><a
           class="page-link relative block py-1.5 px-3 rounded border-0 bg-transparent outline-none transition-all duration-300 rounded text-gray-500 pointer-events-none focus:shadow-none"
           href="#" tabindex="-1" aria-disabled="true">Previous</a></li>
-      <li class="page-item" v-for="item in totalResults" :key="item.id"><a
+      <li class="page-item cursor-pointer" v-for="item in totalResults" :key="item.id"><a
           class="page-link relative block py-1.5 px-3 rounded border-0 bg-transparent outline-none transition-all duration-300 rounded text-white hover:bg-gray-900 focus:shadow-none"
            @click="searchMovie2(item)">{{item}}</a></li>
       <li class="page-item"><a
@@ -61,4 +64,12 @@ searchMovie2()
     </ul>
   </nav>
 </div>
+</div>
+
 </template>
+
+<style>
+  body {
+    background-color: #000;
+  }
+</style>
