@@ -1,6 +1,6 @@
 
 <script lang="ts" setup>
-import { ref } from 'vue';
+import { ref, watchEffect } from 'vue';
 import axios from "axios";
 import { useRouter } from "vue-router";
 
@@ -8,11 +8,9 @@ const router = useRouter();
 
 const searchMovieName = router.currentRoute.value.query.name
 
-
 const searchMovieList = ref();
 
 const totalResults = ref();
-
 
 const searchMovie2 = (e) => {
   axios.get(`http://www.omdbapi.com/?apikey=8321507c&s=${searchMovieName}&page=${e}`).then(response => {
@@ -23,20 +21,32 @@ const searchMovie2 = (e) => {
   });
 };
 
+
+const getMovieID = (e) => {
+  console.log(e)
+  router.push({
+    name: "Detail",
+    query: {
+      name: e
+    },
+  });
+};
+
 searchMovie2()
+
 </script>
 
 
 
 <template>
-<h3 class="text-white text-5xl flex justify-center items-center">Movies not found</h3>
+<h3 v-if="!searchMovieList" class="text-white text-5xl flex justify-center items-center">Movies not found</h3>
 
 <div v-if="searchMovieList">
-  <h3 class="text-white text-5xl ml-10 mt-10">result for {{searchMovieName}}</h3>
-    <div class="grid grid-cols-5 gap-8 p-9">
-  <div v-for="movie in searchMovieList" :key="movie.imdbID">
+  <h3 class="text-white text-5xl md:ml-10 mt-10 text-center md:text-start">Result for {{searchMovieName}}</h3>
+    <div class="grid grid-cols-1 place-items-center gap-8 p-9 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
+  <div v-for="movie in searchMovieList" :key="movie.imdbID" @click="getMovieID(movie.imdbID)">
   <div class="rounded-lg bg-gray-900 max-w-sm hover:scale-110 duration-500 cursor-pointer">
-    <a href="#!">
+    <a>
       <img class="rounded-t-lg w-96 h-80 overflow-hidden contrast-125" :src="movie.Poster" alt=""/>
     </a>
     <div class="p-3">
@@ -49,7 +59,7 @@ searchMovie2()
   </div>
   </div>
 
-  <div class="flex justify-center">
+  <div class="flex justify-center mb-10">
   <nav aria-label="Page navigation example">
     <ul class="flex list-style-none">
       <li class="page-item disabled"><a

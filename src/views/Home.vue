@@ -1,19 +1,41 @@
 <script setup lang="ts">
-import {  ref } from 'vue';
+import {  computed, reactive, ref, watchEffect } from 'vue';
 
 import Movie from '../components/Movie.vue'
+import MovieFilter from '../components/MovieFilter.vue'
 
 import axios from "axios";
 
 
+const filter = reactive({
+  type : null,
+  year : null
+});
 
+const filterTypeAssign = (type) => {
+  filter.type = type;
+}
+
+const filterYearAssign = (year) => {
+  filter.year = year;
+}
 
 
 const homePageMoviesList = ref();
 const totalResults = ref();
 
+
+
 const homePageMovies = (pageNumber) => {
-  axios.get(`http://www.omdbapi.com/?apikey=8321507c&s=all&y=2022&page=${pageNumber}`)
+  watchEffect(() => {
+    let url = `http://www.omdbapi.com/?apikey=8321507c&s=all&y=2022&page=${pageNumber}`
+    if (filter.type) {
+      url = `http://www.omdbapi.com/?apikey=8321507c&s=all&type=${filter.type}&page=${pageNumber}`
+    } else if (filter.year) {
+      console.log('both');
+      url = `http://www.omdbapi.com/?apikey=8321507c&s=all&y=${filter.year}&type=${filter.type}&page=${pageNumber}`
+    }
+    axios.get(url)
     .then(response => {
       homePageMoviesList.value = response.data.Search;
       totalResults.value = Math.floor(response.data.totalResults / 10);
@@ -22,17 +44,24 @@ const homePageMovies = (pageNumber) => {
     .catch(error => {
       console.log(error);
     });
+});
 }
+
+
+
+
 
 
 homePageMovies()
 </script>
 
 <template>
+
+<MovieFilter @filter-type="filterTypeAssign" @filter-year="filterYearAssign"/>
   <Movie :homePageMoviesList="homePageMoviesList" />
 
 
-<div class="flex justify-center">
+<div class="flex justify-center mb-10">
   <nav aria-label="Page navigation example">
     <ul class="flex list-style-none">
       <li class="page-item disabled"><a

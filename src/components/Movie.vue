@@ -23,7 +23,7 @@ const getMovieID = (e) => {
 
 </script>
 <template>
-<h3 class="text-white text-5xl ml-10 mt-10 text-center md:text-start">Movies of 2022</h3>
+<h3 class="text-white text-5xl md:ml-10 mt-10 text-center md:text-start">Movies of 2022</h3>
   <div class="grid grid-cols-1 place-items-center gap-8 p-9 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
   <div v-for="movie in homePageMoviesList" :key="movie.imdbID" @click="getMovieID(movie.imdbID)"  >
   <div class="rounded-lg bg-gray-900 max-w-sm hover:scale-110 duration-500 cursor-pointer">
