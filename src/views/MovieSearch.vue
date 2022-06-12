@@ -8,7 +8,7 @@
 
   const searchMovieList = ref();
   const totalResults = ref<number>();
-  const valuePageNumber = ref();
+  const valuePageNumber = ref<number>();
 
   const searchMovieName = router.currentRoute.value.query.name
 
@@ -17,11 +17,11 @@
     year : null
   });
 
-  const filterTypeAssign = (type) => {
+  const filterTypeAssign = (type :string) => {
     filter.type = type;
   }
 
-  const filterYearAssign = (year) => {
+  const filterYearAssign = (year :number) => {
     filter.year = year;
   }
 
@@ -34,12 +34,12 @@
       },
     });
 
-    watchEffect(() => {
+      watchEffect(() => {
       let url = `http://www.omdbapi.com/?apikey=8321507c&s=${searchMovieName}&page=${pageNumber}`
       if (filter.type || filter.year) {
         url = `http://www.omdbapi.com/?apikey=8321507c&s=${searchMovieName}&y=${filter?.year}&type=${filter?.type}&page=${pageNumber}`
       }
-      axios.get(url)
+       axios.get(url)
       .then(response => {
         searchMovieList.value = response.data.Search;
         totalResults.value = Math.floor(response.data.totalResults / 10);
@@ -65,12 +65,13 @@
 </script>
 
 <template>
-  <h3 v-if="!searchMovieList" class="text-white text-5xl flex justify-center items-center">Movies not found</h3>
-
   <MovieFilter @filter-type="filterTypeAssign" @filter-year="filterYearAssign"/>
-  <div v-if="searchMovieList">
 
+  <h3 v-if="!searchMovieList" class="text-white text-5xl flex justify-center items-center">Movie not found</h3>
+
+  <div v-if="searchMovieList">
     <h3 class="text-white text-5xl md:ml-10 mt-10 text-center md:text-start">Result for {{searchMovieName}}</h3>
+
       <div class="grid grid-cols-1 place-items-center gap-8 p-9 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
         <div v-for="movie in searchMovieList" :key="movie.imdbID" @click="goToDetailPage(movie.imdbID)">
           <div class="rounded-lg bg-gray-900 max-w-sm hover:scale-110 duration-500 cursor-pointer">
@@ -94,6 +95,5 @@
         </ul>
       </nav>
     </div>
-    
   </div>
 </template>

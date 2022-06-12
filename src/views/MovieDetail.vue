@@ -24,7 +24,7 @@
 
 <template>
   <div class="grid grid-flow-row grid-rows-2 md:grid-rows-none md:grid-flow-col ml-8 mt-8" v-for="movie in movieDetail" :key="movie">
-    <div class="relative flex w-96 place-self-center hover:scale-110 duration-500">
+    <div class="relative flex w-80 md:w-96 place-self-center hover:scale-110 duration-500">
       <img class="rounded-t-lg w-96 h-auto overflow-hidden hover:contrast-150 duration-500" :src="movie.Poster" alt="">
       <span class="absolute bottom-2 right-2 bg-yellow-400 text-3xl rounded-full p-4 leading-normal font-black">{{movie.imdbRating}}</span>
       <span class="absolute bottom-2 left-2 bg-red-800 text-2xl rounded-xl p-2 text-white font-medium">{{movie.Runtime}}</span>

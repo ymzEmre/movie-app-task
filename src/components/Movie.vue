@@ -9,7 +9,6 @@
     }
   });
 
-
   const router = useRouter();
   
   const getMovieId = (movieId: number) => {

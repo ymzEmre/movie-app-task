@@ -7,19 +7,19 @@
   const router = useRouter();
 
   const homePageMoviesList = ref();
-  const totalResults = ref();
-  const valuePageNumber = ref();
+  const totalResults = ref<number>();
+  const valuePageNumber = ref<number>();
 
- const filter = reactive({
-  type : null,
-  year : null
-});
+  const filter = reactive({
+    type : null,
+    year : null
+  });
 
-  const filterTypeAssign = (type) => {
+  const filterTypeAssign = (type :string) => {
     filter.type = type;
   }
 
-  const filterYearAssign = (year) => {
+  const filterYearAssign = (year :number) => {
     filter.year = year;
   }
 
@@ -54,14 +54,16 @@
 
 <template>
 
-  <div class="flex flex-column flex-wrap justify-center md:justify-between md:flex-row items-end ">
-    <h3 v-if="filter.year && filter.type" class="text-white text-5xl md:ml-10 mt-10 text-center md:text-start">Movies of type {{filter.type}} and year {{filter.year}}</h3>
-    <h3 v-else-if="filter.type" class="text-white text-5xl md:ml-10 mt-10 text-center md:text-start">Movies of type {{filter.type}}</h3>
-    <h3 v-else-if="filter.year" class="text-white text-5xl md:ml-10 mt-10 text-center md:text-start">Movies of year {{filter.year}}</h3>
-    <h3 v-else  class="text-white text-5xl md:ml-10 mt-10 text-center md:text-start">Movies of 2022</h3>
+  <div class="flex flex-column flex-wrap justify-center lg:justify-between xl:justify-center md:flex-row items-end">
 
-    <MovieFilter @filter-type="filterTypeAssign" @filter-year="filterYearAssign"/>
+    <div class="flex items-center md:items-end flex-col md:flex-row justify-between w-full">
+      <h3 v-if="filter.year && filter.type" class="text-white text-5xl md:ml-10 mt-10 text-center md:text-start">Results for of type {{filter.type}} and year {{filter.year}}</h3>
+      <h3 v-else-if="filter.type" class="text-white text-5xl md:ml-10 mt-10 text-center md:text-start">Results of type {{filter.type}}</h3>
+      <h3 v-else-if="filter.year" class="text-white text-5xl md:ml-10 mt-10 text-center md:text-start">Results of year {{filter.year}}</h3>
+      <h3 v-else  class="text-white text-5xl md:ml-10 mt-10 text-center md:text-start">Movies of 2022</h3>
 
+      <MovieFilter @filter-type="filterTypeAssign" @filter-year="filterYearAssign"/>
+    </div>
     <Movie :homePageMoviesList="homePageMoviesList" />
   </div>
   <div class="flex justify-center mb-10">
