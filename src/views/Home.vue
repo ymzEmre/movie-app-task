@@ -37,12 +37,7 @@
       if (filter.type || filter.year) {
         url = `http://www.omdbapi.com/?apikey=8321507c&s=all&y=${filter?.year}&type=${filter?.type}&page=${pageNumber}`
       }
-      axios.get(url ,{
-         headers: {
-          'Content-Type': 'application/json;charset=UTF-8',
-          'Access-Control-Allow-Origin': '*' // Could work and fix the previous problem, but not in all APIs
-        },
-      })
+      axios.get(url)
       .then(response => {
         homePageMoviesList.value = response.data.Search;
         totalResults.value = Math.floor(response.data.totalResults / 10);
