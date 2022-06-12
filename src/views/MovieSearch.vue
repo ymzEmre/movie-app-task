@@ -1,7 +1,8 @@
 <script lang="ts" setup>
-  import { ref, watchEffect } from 'vue';
+  import { reactive, ref, watchEffect } from 'vue';
   import { useRouter } from "vue-router";
   import axios from "axios";
+  import MovieFilter from '../components/MovieFilter.vue'
 
   const router = useRouter();
 
@@ -10,6 +11,19 @@
   const valuePageNumber = ref();
 
   const searchMovieName = router.currentRoute.value.query.name
+
+  const filter = reactive({
+    type : null,
+    year : null
+  });
+
+  const filterTypeAssign = (type) => {
+    filter.type = type;
+  }
+
+  const filterYearAssign = (year) => {
+    filter.year = year;
+  }
 
   const getSearchedMovies = (pageNumber :number) => {
     valuePageNumber.value = pageNumber;
@@ -20,14 +34,21 @@
       },
     });
 
-    axios.get(`http://www.omdbapi.com/?apikey=8321507c&s=${searchMovieName}&page=${pageNumber}`).then(response => {
-      searchMovieList.value = response.data.Search;
-      totalResults.value = Math.floor(response.data.totalResults / 10);
-      window.scrollTo(0, 0);
-    }).catch(error => {
-      console.log(error);
+    watchEffect(() => {
+      let url = `http://www.omdbapi.com/?apikey=8321507c&s=${searchMovieName}&page=${pageNumber}`
+      if (filter.type || filter.year) {
+        url = `http://www.omdbapi.com/?apikey=8321507c&s=${searchMovieName}&y=${filter?.year}&type=${filter?.type}&page=${pageNumber}`
+      }
+      axios.get(url)
+      .then(response => {
+        searchMovieList.value = response.data.Search;
+        totalResults.value = Math.floor(response.data.totalResults / 10);
+        window.scrollTo(0, 0);
+      }).catch(error => {
+        console.log(error);
+      });
     });
-  };
+  }
 
   const goToDetailPage = (movieId :number) => {
     router.push({
@@ -38,12 +59,15 @@
     });
   };
 
+
+
   getSearchedMovies(1)
 </script>
 
 <template>
   <h3 v-if="!searchMovieList" class="text-white text-5xl flex justify-center items-center">Movies not found</h3>
 
+  <MovieFilter @filter-type="filterTypeAssign" @filter-year="filterYearAssign"/>
   <div v-if="searchMovieList">
 
     <h3 class="text-white text-5xl md:ml-10 mt-10 text-center md:text-start">Result for {{searchMovieName}}</h3>

@@ -20,7 +20,7 @@
 </script>
 
 <template>
-  <div class="flex justify-end mr-9">
+  <div class="flex justify-center md:justify-end mt-5 md:mr-9">
     
     <div class="mr-1">
       <select @change="filterType($event)" class="form-select appearance-none min-w-0 px-3 py-1.5 text-base font-normal text-white bg-gray-800 bg-clip-padding rounded transition ease-in-out m-0  focus:bg-gray-700 focus:outline-none" aria-label="Default select example">
