@@ -1,18 +1,18 @@
 <script lang="ts" setup>
-import Navbar from './components/Navbar.vue'
-import { useRouter } from "vue-router";
-const router = useRouter();
+  import { useRouter } from "vue-router";
+  import Navbar from './components/Navbar.vue'
 
+  const router = useRouter();
 
-const searchMovie = (e) => {
-  if (e == undefined) return
-  router.push({
-    name: "Search",
-    query: {
-      name: e
-    },
-  });
-};
+  const searchMovie = (movieName) => {
+    if (movieName == undefined) return
+    router.push({
+      name: "SearchPage",
+      query: {
+        name: movieName
+      },
+    });
+  };
 </script>
 
 
