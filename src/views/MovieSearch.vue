@@ -59,15 +59,13 @@
     });
   };
 
-
-
   getSearchedMovies(1)
 </script>
 
 <template>
   <MovieFilter @filter-type="filterTypeAssign" @filter-year="filterYearAssign"/>
 
-  <h3 v-if="!searchMovieList" class="text-white text-5xl flex justify-center items-center">Movie not found</h3>
+  <h3 v-if="!searchMovieList" class="text-white text-5xl flex justify-center items-center mt-10 text-center">Movie not found</h3>
 
   <div v-if="searchMovieList">
     <h3 class="text-white text-5xl md:ml-10 mt-10 text-center md:text-start">Result for {{searchMovieName}}</h3>
