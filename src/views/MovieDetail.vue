@@ -23,8 +23,8 @@
 </script>
 
 <template>
-  <div class="grid grid-flow-col ml-8 mt-8" v-for="movie in movieDetail" :key="movie">
-    <div class="relative">
+  <div class="grid grid-flow-row md:grid-flow-col ml-8 mt-8" v-for="movie in movieDetail" :key="movie">
+    <div class="relative flex w-96">
       <img class="rounded-t-lg w-96 h-auto contrast-125" :src="movie.Poster" alt="">
       <span class="absolute bottom-2 right-2 bg-yellow-400 text-3xl rounded-full p-4 leading-normal font-black">{{movie.imdbRating}}</span>
       <span class="absolute bottom-2 left-2 bg-red-800 text-2xl rounded-xl p-2 text-white font-medium">{{movie.Runtime}}</span>
@@ -38,9 +38,3 @@
     </div>
   </div>
 </template>
-
-<style>
-  body {
-    background-color: #000;
-  }
-</style>

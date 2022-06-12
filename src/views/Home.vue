@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { inject, reactive, ref, watchEffect } from 'vue';
+  import { reactive, ref, watchEffect } from 'vue';
   import axios from "axios";
   import Movie from '../components/Movie.vue'
   import MovieFilter from '../components/MovieFilter.vue'
@@ -54,15 +54,15 @@
 
 <template>
 
-  <div class="flex flex-row flex-wrap justify-between items-end">
-  <h3 v-if="filter.year && filter.type" class="text-white text-5xl md:ml-10 mt-10 text-center md:text-start">Movies of type {{filter.type}} and year {{filter.year}}</h3>
-  <h3 v-else-if="filter.type" class="text-white text-5xl md:ml-10 mt-10 text-center md:text-start">Movies of type {{filter.type}}</h3>
-  <h3 v-else-if="filter.year" class="text-white text-5xl md:ml-10 mt-10 text-center md:text-start">Movies of year {{filter.year}}</h3>
-  <h3 v-else class="text-white text-5xl md:ml-10 mt-10 text-center md:text-start">Movies of 2022</h3>
+  <div class="flex flex-column flex-wrap justify-center md:justify-between md:flex-row items-end ">
+    <h3 v-if="filter.year && filter.type" class="text-white text-5xl md:ml-10 mt-10 text-center md:text-start">Movies of type {{filter.type}} and year {{filter.year}}</h3>
+    <h3 v-else-if="filter.type" class="text-white text-5xl md:ml-10 mt-10 text-center md:text-start">Movies of type {{filter.type}}</h3>
+    <h3 v-else-if="filter.year" class="text-white text-5xl md:ml-10 mt-10 text-center md:text-start">Movies of year {{filter.year}}</h3>
+    <h3 v-else  class="text-white text-5xl md:ml-10 mt-10 text-center md:text-start">Movies of 2022</h3>
 
-  <MovieFilter @filter-type="filterTypeAssign" @filter-year="filterYearAssign"/>
+    <MovieFilter @filter-type="filterTypeAssign" @filter-year="filterYearAssign"/>
 
-  <Movie :homePageMoviesList="homePageMoviesList" />
+    <Movie :homePageMoviesList="homePageMoviesList" />
   </div>
   <div class="flex justify-center mb-10">
     <nav aria-label="Page navigation example">
@@ -77,8 +77,3 @@
   </div>
 </template>
 
-<style>
-  body {
-    background-color: #000;
-  }
-</style>

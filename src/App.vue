@@ -20,5 +20,3 @@
   <Navbar @search-movie='searchMovie'/>
   <router-view />
 </template>
-
-
