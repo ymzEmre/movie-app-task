@@ -10,7 +10,6 @@
   const totalResults = ref<number>();
   const valuePageNumber = ref<number>();
 
-  const searchMovieName = router.currentRoute.value.query.name
 
   interface Filter {
     type: string | null;
@@ -40,18 +39,20 @@
     });
 
       watchEffect(() => {
-      let url = `http://www.omdbapi.com/?apikey=8321507c&s=${searchMovieName}&page=${pageNumber}`
-      if (filter.type || filter.year) {
-        url = `http://www.omdbapi.com/?apikey=8321507c&s=${searchMovieName}&y=${filter?.year}&type=${filter?.type}&page=${pageNumber}`
-      }
-       axios.get(url)
-      .then(response => {
-        searchMovieList.value = response.data.Search;
-        totalResults.value = Math.floor(response.data.totalResults / 10);
-        window.scrollTo(0, 0);
-      }).catch(error => {
-        console.log(error);
-      });
+        const searchMovieName = router.currentRoute.value.query.name
+
+        let url = `http://www.omdbapi.com/?apikey=8321507c&s=${searchMovieName}&page=${pageNumber}`
+        if (filter.type || filter.year) {
+          url = `http://www.omdbapi.com/?apikey=8321507c&s=${searchMovieName}&y=${filter?.year}&type=${filter?.type}&page=${pageNumber}`
+        }
+         axios.get(url)
+        .then(response => {
+          searchMovieList.value = response.data.Search;
+          totalResults.value = Math.floor(response.data.totalResults / 10);
+          window.scrollTo(0, 0);
+        }).catch(error => {
+          console.log(error);
+        });
     });
   }
 
@@ -71,10 +72,11 @@
    
   <h3 v-if="!searchMovieList" class="text-white text-5xl flex justify-center items-center mt-10 text-center">Movie not found</h3>
 
+  <MovieFilter @filter-type="filterTypeAssign" @filter-year="filterYearAssign"/>
+
   <div v-if="searchMovieList">
    <div class="flex items-center md:items-end flex-col md:flex-row justify-between w-full">
       <h3 class="text-white text-5xl md:ml-10 mt-10 text-center md:text-start">Result for {{searchMovieName}}</h3>
-      <MovieFilter @filter-type="filterTypeAssign" @filter-year="filterYearAssign"/>
     </div>
 
       <div class="grid grid-cols-1 place-items-center gap-8 p-9 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
