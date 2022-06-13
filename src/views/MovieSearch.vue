@@ -29,6 +29,8 @@
     filter.year = year;
   }
 
+  let searchMovieName = router.currentRoute.value.query.name
+
   const getSearchedMovies = (pageNumber: number) => {
     valuePageNumber.value = pageNumber;
 
@@ -37,10 +39,8 @@
         page: pageNumber
       },
     });
-
-        const searchMovieName = router.currentRoute.value.query.name
-      watchEffect(() => {
-        console.log(searchMovieName)
+        watchEffect(() => {
+        searchMovieName = router.currentRoute.value.query.name
 
         let url = `http://www.omdbapi.com/?apikey=8321507c&s=${searchMovieName}&page=${pageNumber}`
         if (filter.type || filter.year) {
