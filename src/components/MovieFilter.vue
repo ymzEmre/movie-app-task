@@ -5,11 +5,11 @@
 
   const valueYear = ref<number>();
 
-  const filterType = (event :number) => {
+  const filterType = (event: number) :void => {
     emit("filter-type", event.target.value);
   }
 
-  const filterYear = (event :number) => {
+  const filterYear = (event: number) :void => {
     emit("filter-year", valueYear.value);
   }
 </script>

@@ -12,20 +12,25 @@
 
   const searchMovieName = router.currentRoute.value.query.name
 
-  const filter = reactive({
+  interface Filter {
+    type: string | null;
+    year: number | null;
+  }
+
+  const filter: Filter = reactive({
     type : null,
     year : null
   });
 
-  const filterTypeAssign = (type :string) => {
+  const filterTypeAssign = (type: string) => {
     filter.type = type;
   }
 
-  const filterYearAssign = (year :number) => {
+  const filterYearAssign = (year: number) => {
     filter.year = year;
   }
 
-  const getSearchedMovies = (pageNumber :number) => {
+  const getSearchedMovies = (pageNumber: number) => {
     valuePageNumber.value = pageNumber;
 
     router.push({
@@ -50,7 +55,7 @@
     });
   }
 
-  const goToDetailPage = (movieId :number) => {
+  const goToDetailPage = (movieId: number) => {
     router.push({
       name: "MovieDetailPage",
       query: {
@@ -63,17 +68,19 @@
 </script>
 
 <template>
-  <MovieFilter @filter-type="filterTypeAssign" @filter-year="filterYearAssign"/>
-
+   
   <h3 v-if="!searchMovieList" class="text-white text-5xl flex justify-center items-center mt-10 text-center">Movie not found</h3>
 
   <div v-if="searchMovieList">
-    <h3 class="text-white text-5xl md:ml-10 mt-10 text-center md:text-start">Result for {{searchMovieName}}</h3>
+   <div class="flex items-center md:items-end flex-col md:flex-row justify-between w-full">
+      <h3 class="text-white text-5xl md:ml-10 mt-10 text-center md:text-start">Result for {{searchMovieName}}</h3>
+      <MovieFilter @filter-type="filterTypeAssign" @filter-year="filterYearAssign"/>
+    </div>
 
       <div class="grid grid-cols-1 place-items-center gap-8 p-9 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
         <div v-for="movie in searchMovieList" :key="movie.imdbID" @click="goToDetailPage(movie.imdbID)">
-          <div class="rounded-lg bg-gray-900 max-w-sm hover:scale-110 duration-500 cursor-pointer">
-            <img class="rounded-t-lg w-96 h-80 overflow-hidden contrast-125" :src="movie.Poster" alt="{{movie.Title}} "/>
+          <div class="rounded-lg bg-gray-900 max-w-sm hover:scale-110 duration-500 cursor-pointer max-w-xs">
+            <img class="rounded-t-lg w-96 h-80 overflow-hidden contrast-125" :src="movie.Poster" :alt="movie.Title"/>
               <div class="p-3">
                 <h5 class=" text-white text-base font-medium mb-2">{{movie.Title}}</h5>
                 <p class=" text-white text-base mb-4">{{movie.Year}}</p>

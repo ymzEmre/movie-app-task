@@ -6,7 +6,7 @@
   
   const searchValue = ref<string | number>();
 
-  const goToHome = () => {
+  const goToHome = () :void => {
     router.push({
       name: "HomePage",
     });

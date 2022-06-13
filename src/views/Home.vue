@@ -4,26 +4,32 @@
   import Movie from '../components/Movie.vue'
   import MovieFilter from '../components/MovieFilter.vue'
   import { useRouter } from "vue-router";
+
   const router = useRouter();
 
   const homePageMoviesList = ref();
   const totalResults = ref<number>();
   const valuePageNumber = ref<number>();
 
-  const filter = reactive({
+  interface Filter {
+    type: string | null;
+    year: number | null;
+  }
+
+  const filter: Filter = reactive({
     type : null,
     year : null
   });
 
-  const filterTypeAssign = (type :string) => {
+  const filterTypeAssign = (type: string) :void => {
     filter.type = type;
   }
 
-  const filterYearAssign = (year :number) => {
+  const filterYearAssign = (year: number) :void => {
     filter.year = year;
   }
 
-  const getHomePageMovies = (pageNumber: number) => {
+  const getHomePageMovies = (pageNumber: number) :void => {
     valuePageNumber.value = pageNumber;
 
     router.push({
@@ -53,7 +59,6 @@
 </script>
 
 <template>
-
   <div class="flex flex-column flex-wrap justify-center lg:justify-between xl:justify-center md:flex-row items-end">
 
     <div class="flex items-center md:items-end flex-col md:flex-row justify-between w-full">
