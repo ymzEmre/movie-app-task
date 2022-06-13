@@ -38,8 +38,9 @@
       },
     });
 
-      watchEffect(() => {
         const searchMovieName = router.currentRoute.value.query.name
+      watchEffect(() => {
+        console.log(searchMovieName)
 
         let url = `http://www.omdbapi.com/?apikey=8321507c&s=${searchMovieName}&page=${pageNumber}`
         if (filter.type || filter.year) {
