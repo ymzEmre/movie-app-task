@@ -70,10 +70,9 @@
 </script>
 
 <template>
-   
-  <h3 v-if="!searchMovieList" class="text-white text-5xl flex justify-center items-center mt-10 text-center">Movie not found</h3>
-
   <MovieFilter @filter-type="filterTypeAssign" @filter-year="filterYearAssign"/>
+
+  <h3 v-if="!searchMovieList" class="text-white text-5xl flex justify-center items-center mt-10 text-center">Movie not found</h3>
 
   <div v-if="searchMovieList">
    <div class="flex items-center md:items-end flex-col md:flex-row justify-between w-full">
