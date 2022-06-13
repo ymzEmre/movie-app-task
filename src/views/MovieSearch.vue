@@ -92,7 +92,7 @@
       </div>
 
     <div class="flex justify-center mb-10">
-      <nav aria-label="Page navigation example">
+      <nav class="overflow-x-auto max-w-xs lg:max-w-7xl">
         <ul class="flex list-style-none">
           <li class="page-item cursor-pointer" :class="{'bg-gray-900 rounded': item == valuePageNumber}" v-for="item in totalResults" :key="item.id">
             <a @click="getSearchedMovies(item)" class="page-link relative block py-1.5 px-3 rounded border-0 bg-transparent outline-none transition-all duration-300 rounded text-white hover:bg-gray-900 focus:shadow-none">
